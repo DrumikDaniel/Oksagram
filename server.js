@@ -1851,6 +1851,18 @@ app.use('/uploads', express.static(UPLOAD_DIR));
 app.use('/avatars', express.static(AVATAR_DIR));
 app.use('/stickers', express.static(STICKER_DIR));
 
+// ЭТО ДОЛЖНО БЫТЬ В КОНЦЕ ФАЙЛА, ПЕРЕД server.listen()
+
+// Отдаём index.html для всех маршрутов
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Для всех остальных маршрутов (SPA)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // ============ ЗАПУСК СЕРВЕРА ============
 server.listen(PORT, () => {
     console.log(`\n🚀 OKSAGRAM - ПОЛНАЯ ВЕРСИЯ ЗАПУЩЕНА`);
